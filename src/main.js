@@ -1,4 +1,5 @@
 import { createApp } from 'vue';
+import './assets/sass/style.sass';
 import App from './App.vue';
 import router from './router';
 import store from './store';
