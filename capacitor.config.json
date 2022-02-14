@@ -1,0 +1,6 @@
+{
+  "appId": "com.example.spotiswipe",
+  "appName": "spotiswipe",
+  "webDir": "dist",
+  "bundledWebRuntime": false
+}
