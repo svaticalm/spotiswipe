@@ -10,6 +10,7 @@
   "dependencies": {
     "@capacitor/cli": "^3.4.1",
     "@capacitor/core": "^3.4.1",
+    "axios": "^0.26.0",
     "core-js": "^3.6.5",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
@@ -42,7 +43,9 @@
     "parserOptions": {
       "parser": "babel-eslint"
     },
-    "rules": {}
+    "rules": {
+    	"indent": ["error", 4]
+	}
   },
   "browserslist": [
     "> 1%",
