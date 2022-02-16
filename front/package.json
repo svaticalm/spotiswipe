@@ -44,7 +44,8 @@
       "parser": "babel-eslint"
     },
     "rules": {
-    	"indent": ["error", 4]
+    	"indent": ["error", 4],
+		"no-tabs": 0
 	}
   },
   "browserslist": [
