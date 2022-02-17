@@ -1,5 +1,4 @@
 // const SpotifyWebApi = require('spotify-web-api-node');
-const open = require('open');
 const axios = require('axios');
 
 const clientId = '99abd32428d849b9b7734dde13eb2b98';
@@ -12,8 +11,6 @@ const redirectUri = 'http://localhost:8080/';
 //     clientSecret,
 //     redirectUri,
 // });
-
-open(`https://accounts.spotify.com/ru/authorize?client_id=${clientId}&response_type=token&redirect_uri=${redirectUri}&client_secret=${clientSecret}`);
 
 const fetchData = async () => {
     let response;
@@ -42,4 +39,6 @@ const fetchData = async () => {
     return response?.data ? response?.data : null;
 };
 
-module.exports.fetchData = fetchData;
+module.exports = {
+    fetchData, clientId, clientSecret, redirectUri,
+};
