@@ -1,60 +1,57 @@
 <template>
     <div class="cards">
-        <div class="cards__item"
-        v-for="(card, index) in tracks" :key="card.track.id"
-        :class="{'active': (index === 0)}"
-        :style="{'z-index': tracks.length - index}">
-            <div class="cards__item-choice --reject"></div>
-            <div class="cards__item-choice --like"></div>
-            <div class="cards__item-image"
-                :style="{backgroundImage: `url(${card.track.album.images[0].url})`}">
+        <template v-if="isCardsExist">
+            <spotify-card
+                v-for="(card, index) in tracks"
+                :key="card.track.id"
+                :class="{'active': (index === 0)}"
+                :style="{'z-index': tracks.length - index}"
+                :swipedCards="swipedCards"
+                :index="index"
+                :card="card">
+            </spotify-card>
+        </template>
+
+        <template v-else>
+            <div class="nothing">
+                <div class="sad-icon"></div>
+                Кажется, карточки закончились...<br>
+                Приходите позже
             </div>
-            <div class="cards__item-info">
-                <div class="cards__item-name">
-                    {{card.track.name}}
-                </div>
-                <div class="cards__item-author">
-                    <span class="" v-for="(artist, index) in card.track.artists" :key="artist.id">
-                        <span v-if="index !== 0">, </span>{{artist.name}}
-                    </span>
-                </div>
-            </div>
-        </div>
+        </template>
     </div>
 </template>
 
 <script>
+import SpotifyCard from '@/components/SpotifyCard.vue';
+
 export default {
     name: 'SpotifyCards',
-    components: {},
+    components: {
+        SpotifyCard,
+    },
     props: {
         tracks: {},
     },
     data() {
         return {
-            cards: [{
-                name: '1',
-                id: 123,
-            }, {
-                name: '2',
-                id: 312,
-            }, {
-                name: '3',
-                id: 512,
-            }, {
-                name: '4',
-                id: 513,
-            }],
+            swipedCards: 0,
         };
     },
-    computed() {
+    computed: {
+        isCardsExist() {
+            return this.swipedCards !== this.tracks.length;
+        },
     },
     methods: {
+    },
+    watch: {
+
     },
     mounted() {
         let animating = false;
         let cardsCounter = 0;
-        const numOfCards = this.cards.length;
+        const numOfCards = this.tracks.length;
         const decisionVal = 80;
         let pullDeltaX = 0;
         let deg = 0;
@@ -87,11 +84,12 @@ export default {
                 setTimeout(() => {
                     $card.classList.add('below');
                     $card.classList.remove('inactive', 'to-left', 'to-right', 'active');
-                    document.querySelector('.cards__item:not(.below)').classList.add('active');
                     cardsCounter += 1;
                     this.swipedCards = cardsCounter;
                     if (cardsCounter === numOfCards) {
                         cardsCounter = 0;
+                    } else {
+                        document.querySelector('.cards__item:not(.below)').classList.add('active');
                     }
                 }, 300);
             }
@@ -120,7 +118,6 @@ export default {
                 $cardReject = $card.querySelector('.--reject');
                 $cardLike = $card.querySelector('.--like');
 
-                console.log(event);
                 const startX = event.pageX || event.touches[0].pageX;
 
                 const onMove = (event1) => {

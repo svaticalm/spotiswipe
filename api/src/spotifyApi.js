@@ -26,6 +26,7 @@ const fetchData = async () => {
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/x-www-form-urlencoded',
+				"Access-Control-Allow-Headers", "*"
             },
             auth: {
                 username: clientId,

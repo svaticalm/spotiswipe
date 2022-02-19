@@ -90,6 +90,12 @@ body
 			right: 0
 			bottom: 0
 			opacity: 0
+			z-index: 10
+			pointer-events: none
+			display: flex
+			justify-content: center
+			align-items: center
+			padding-bottom: 93px
 			&:after
 				position: absolute
 				content: ''
@@ -97,14 +103,38 @@ body
 				top: 0
 				right: 0
 				bottom: 0
+			.icon-wrapper
+				width: 71px
+				height: 71px
+				border-radius: 70px
+				display: flex
+				justify-content: center
+				align-items: center
+				position: relative
+				z-index: 1
+				.icon
+					background-size: contain
+					background-repeat: no-repeat
 			&.--reject
 				&:after
 					background: linear-gradient(148.1deg, #CD5959 15.7%, #7C1B1B 85.53%)
 					opacity: 0.85
+				.icon-wrapper
+					background: linear-gradient(148.1deg, #CD5959 15.7%, #7C1B1B 85.53%)
+					.icon
+						width: 26px
+						height: 26px
+						background-image: url(../../assets/img/icons/close.svg)
 			&.--like
 				&:after
 					background: linear-gradient(142.04deg, #469663 16.46%, #11612D 84.99%)
 					opacity: 0.85
+				.icon-wrapper
+					background: linear-gradient(142.04deg, #469663 16.46%, #11612D 84.99%)
+					.icon
+						width: 30px
+						height: 26px
+						background-image: url(../../assets/img/icons/like.svg)
 		&-image
 			width: 366px
 			height: 366px
@@ -116,6 +146,85 @@ body
 			font-weight: 900
 			font-size: 24px
 			line-height: 29px
+			white-space: nowrap
+			overflow: hidden
+			text-overflow: ellipsis
 		&-author
 			font-size: 14px
 			margin-top: 8px
+			white-space: nowrap
+			overflow: hidden
+			text-overflow: ellipsis
+.audio-player
+	width: 100%
+	position: absolute
+	.time
+		width: 100%
+		padding: 0 8px
+		display: flex
+		justify-content: space-between
+		font-size: 10px
+		line-height: 12px
+		margin-top: -24px
+		color: #fff
+		position: relative
+		z-index: 4
+		font-weight: bold
+	.timeline
+		top: -6px
+		width: 100%
+		background-color: #7D7D7D
+		position: absolute
+		z-index: 1
+		.progress
+			height: 6px
+			transition: all .4s
+			background-color: #fff
+			position: relative
+	.controls
+		.play-container
+			.toggle-play
+				position: absolute
+				bottom: 100%
+				width: 100%
+				height: 366px
+				background-color: transparent
+				display: flex
+				align-items: center
+				justify-content: center
+				transition: all .15s ease
+				background: linear-gradient(to top, rgba(#000, 0.6) -100%, transparent 90%)
+				&:after
+					content: ''
+					width: 70px
+					height: 70px
+					display: block
+					background-image: url(../../assets/img/icons/play.svg)
+					background-size: contain
+					opacity: 0
+					transition: all .15s ease
+					transform: scale(1.3)
+				&.play
+					background-color: rgba(#000, 0.5)
+					&:after
+						opacity: 1
+						transform: scale(1)
+.nothing
+	display: flex
+	align-items: center
+	justify-content: center
+	text-align: center
+	width: 100%
+	font-weight: bold
+	color: #fff
+	font-size: 20px
+	line-height: 30px
+	padding-top: 200px
+	opacity: 0.8
+	flex-direction: column
+	.sad-icon
+		width: 80px
+		height: 80px
+		background-image: url(../../assets/img/icons/sad.svg)
+		background-size: contain
+		margin-bottom: 24px
