@@ -74,6 +74,7 @@ export default {
         const release = () => {
             if (pullDeltaX >= decisionVal) {
                 $card.classList.add('to-right');
+                this.$store.dispatch('api/addTrackToPlaylist', this.tracks[cardsCounter].track.uri);
             } else if (pullDeltaX <= -decisionVal) {
                 $card.classList.add('to-left');
             }

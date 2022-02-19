@@ -2,7 +2,7 @@ import axios from 'axios';
 import baseImage from '@/helpers/baseImage';
 // import initAudioPlayer from '@/helpers/audioPlayer';
 /* eslint no-shadow: ["error", { "allow": ["state"] }] */
-// import router from '../../router';
+import router from '../../router';
 
 const state = {
     token: null,
@@ -70,10 +70,13 @@ const actions = {
             localStorage.setItem('refresh_token', parsedHash.refresh_token);
             commit('SET_TOKEN', parsedHash.access_token);
             commit('SET_REFRESH_TOKEN', parsedHash.refresh_token);
+            router.push('/');
             dispatch('getPlaylist', '37i9dQZF1EIVoL7KX5VFBd?si=7975e607eba9474f');
             dispatch('getUser').then(() => {
                 if (!localStorage.getItem('ourPlaylist')) {
                     dispatch('createPlaylist');
+                } else {
+                    commit('SET_OUR_PLAYLIST', localStorage.getItem('ourPlaylist'));
                 }
             });
         }
@@ -140,6 +143,20 @@ const actions = {
                 resolve();
             }).catch(() => {
                 dispatch('refreshAuthToken', 'addPlaylistImage');
+                resolve();
+            });
+        });
+    },
+    addTrackToPlaylist({ state }, data) {
+        return new Promise((resolve) => {
+            axios.post(`https://api.spotify.com/v1/playlists/${state.ourPlaylist}/tracks`, { uris: [data], position: 0 }, {
+                headers: {
+                    Authorization: `Bearer ${state.token}`,
+                    'Content-Type': 'application/json',
+                },
+            }).then(() => {
+                resolve();
+            }).catch(() => {
                 resolve();
             });
         });
